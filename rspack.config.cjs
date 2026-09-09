@@ -1,14 +1,19 @@
+const path = require('path');
 const Repack = require('@callstack/repack');
 const { ExpoModulesPlugin } = require('@callstack/repack-plugin-expo-modules');
 
 const MINI_APP_HOST = process.env.MINI_APP_HOST || 'localhost';
-const MINI_APP_PORT = process.env.MINI_APP_PORT || '8086';
+const INTERVIEW_PORT = process.env.INTERVIEW_PORT || '8084';
+const LIBRARY_PORT = process.env.LIBRARY_PORT || '8085';
 
 /**
  * Host app Rspack config for Re.Pack + Expo Modules + Module Federation.
  *
- * MiniApp is served from http://localhost:8086 (npm run start:mf in MiniApp).
- * Override with MINI_APP_HOST / MINI_APP_PORT for a device or LAN IP.
+ * Remotes:
+ * - interview @ :8084
+ * - library   @ :8085
+ *
+ * Override host/ports with MINI_APP_HOST / INTERVIEW_PORT / LIBRARY_PORT.
  */
 module.exports = Repack.defineRspackConfig(({ platform, mode, devServer }) => ({
   context: __dirname,
@@ -36,6 +41,15 @@ module.exports = Repack.defineRspackConfig(({ platform, mode, devServer }) => ({
     : {}),
   resolve: {
     ...Repack.getResolveOptions({ enablePackageExports: true }),
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      // Re.Pack + package exports can resolve the TS source and break named
+      // exports (Svg/Path become undefined → red "Un" boxes). Force prebuilt JS.
+      'react-native-svg': path.resolve(
+        __dirname,
+        'node_modules/react-native-svg/lib/module/index.js',
+      ),
+    },
   },
   module: {
     rules: [
@@ -57,7 +71,8 @@ module.exports = Repack.defineRspackConfig(({ platform, mode, devServer }) => ({
     new Repack.plugins.ModuleFederationPluginV2({
       name: 'host',
       remotes: {
-        miniApp: `miniApp@http://${MINI_APP_HOST}:${MINI_APP_PORT}/${platform}/mf-manifest.json`,
+        interview: `interview@http://${MINI_APP_HOST}:${INTERVIEW_PORT}/${platform}/mf-manifest.json`,
+        library: `library@http://${MINI_APP_HOST}:${LIBRARY_PORT}/${platform}/mf-manifest.json`,
       },
       dts: false,
       shared: {

@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "home": "Trang chủ",
+    "profile": "Hồ sơ",
+    "settings": "Cài đặt",
+    "interview": "Phỏng vấn",
+    "library": "Thư viện"
+  },
+  "home": {
+    "title": "Trang chủ",
+    "subtitle": "Màn hình shell của HostApp. Interview và Library tải mini app federated từ footer."
+  },
+  "profile": {
+    "title": "Hồ sơ",
+    "subtitle": "Hồ sơ nằm trong HostApp."
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "appearance": "Giao diện",
+    "theme": "Chủ đề",
+    "light": "Sáng",
+    "dark": "Tối",
+    "language": "Ngôn ngữ",
+    "languageSection": "Ngôn ngữ",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt"
+  }
+}

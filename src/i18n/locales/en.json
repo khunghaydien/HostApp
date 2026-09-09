@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "interview": "Interview",
+    "library": "Library"
+  },
+  "home": {
+    "title": "Home",
+    "subtitle": "Shell screen owned by HostApp. Interview and Library load as federated mini apps from the footer."
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Profile lives in the host app."
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "languageSection": "Language",
+    "english": "English",
+    "vietnamese": "Vietnamese"
+  }
+}
