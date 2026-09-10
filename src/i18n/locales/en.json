@@ -2,27 +2,51 @@
   "tabs": {
     "home": "Home",
     "profile": "Profile",
-    "settings": "Settings",
+    "setting": "Setting",
     "interview": "Interview",
     "library": "Library"
   },
   "home": {
-    "title": "Home",
-    "subtitle": "Shell screen owned by HostApp. Interview and Library load as federated mini apps from the footer."
+    "title": "Home"
   },
   "profile": {
-    "title": "Profile",
-    "subtitle": "Profile lives in the host app."
+    "title": "Profile"
   },
-  "settings": {
-    "title": "Settings",
+  "setting": {
+    "title": "Setting",
     "appearance": "Appearance",
-    "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "language": "Language",
+    "primarySection": "Primary color",
+    "primaryOrange": "Orange",
+    "primaryBlue": "Blue",
+    "primaryGreen": "Green",
+    "primaryPurple": "Purple",
+    "primaryRed": "Red",
     "languageSection": "Language",
     "english": "English",
     "vietnamese": "Vietnamese"
+  },
+  "interview": {
+    "title": "Interview"
+  },
+  "library": {
+    "title": "Library"
+  },
+  "header": {
+    "notifications": "Notifications",
+    "menu": "Menu",
+    "profile": "Profile",
+    "setting": "Setting",
+    "logout": "Log out"
+  },
+  "auth": {
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "login": "Sign in",
+    "errorRequired": "Email and password are required",
+    "errorEmail": "Enter a valid email"
   }
 }

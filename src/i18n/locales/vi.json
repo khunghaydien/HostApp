@@ -2,27 +2,51 @@
   "tabs": {
     "home": "Trang chủ",
     "profile": "Hồ sơ",
-    "settings": "Cài đặt",
+    "setting": "Cài đặt",
     "interview": "Phỏng vấn",
     "library": "Thư viện"
   },
   "home": {
-    "title": "Trang chủ",
-    "subtitle": "Màn hình shell của HostApp. Interview và Library tải mini app federated từ footer."
+    "title": "Trang chủ"
   },
   "profile": {
-    "title": "Hồ sơ",
-    "subtitle": "Hồ sơ nằm trong HostApp."
+    "title": "Hồ sơ"
   },
-  "settings": {
+  "setting": {
     "title": "Cài đặt",
     "appearance": "Giao diện",
-    "theme": "Chủ đề",
     "light": "Sáng",
     "dark": "Tối",
-    "language": "Ngôn ngữ",
+    "primarySection": "Màu chủ đạo",
+    "primaryOrange": "Cam",
+    "primaryBlue": "Xanh dương",
+    "primaryGreen": "Xanh lá",
+    "primaryPurple": "Tím",
+    "primaryRed": "Đỏ",
     "languageSection": "Ngôn ngữ",
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt"
+  },
+  "interview": {
+    "title": "Phỏng vấn"
+  },
+  "library": {
+    "title": "Thư viện"
+  },
+  "header": {
+    "notifications": "Thông báo",
+    "menu": "Menu",
+    "profile": "Hồ sơ",
+    "setting": "Cài đặt",
+    "logout": "Đăng xuất"
+  },
+  "auth": {
+    "email": "Email",
+    "emailPlaceholder": "ban@email.com",
+    "password": "Mật khẩu",
+    "passwordPlaceholder": "••••••••",
+    "login": "Đăng nhập",
+    "errorRequired": "Vui lòng nhập email và mật khẩu",
+    "errorEmail": "Email không hợp lệ"
   }
 }

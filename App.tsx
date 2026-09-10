@@ -1,70 +1,107 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { useTranslation } from 'react-i18next';
 import {
   SafeAreaProvider,
-  SafeAreaView,
   initialWindowMetrics,
 } from 'react-native-safe-area-context';
 
-import { FederatedModule } from '@/federation/FederatedModule';
-import '@/i18n';
+import { AppQueryProvider } from '@/api';
+import { AuthGuard, AuthProvider } from '@/auth';
 import { loadSavedLanguage } from '@/i18n';
-import { getModule, type ModuleId } from '@/modules';
-import { BlankScreen } from '@/screens/BlankScreen';
-import { HomeScreen } from '@/screens/HomeScreen';
-import { ProfileScreen } from '@/screens/ProfileScreen';
-import { SettingsScreen } from '@/screens/SettingsScreen';
-import { Footer } from '@/shell/Footer';
-import { ThemeProvider, useTheme } from '@/theme/ThemeProvider';
+import { type ModuleId } from '@/modules';
+import {
+  HomeScreen,
+  InterviewScreen,
+  LibraryScreen,
+  LoginScreen,
+  ProfileScreen,
+  SettingScreen,
+} from '@/screen';
+import {
+  AppHeader,
+  TabFooter,
+  ThemeProvider,
+  ToastProvider,
+  useTheme,
+} from '@/ui';
 
-/**
- * Root shell: SafeAreaProvider + theme + i18n so every tab stays clear of
- * system chrome and respects appearance / language settings.
- */
 export default function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ThemeProvider>
-        <AppShell />
+        <AppQueryProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <AppRoot />
+            </AuthProvider>
+          </ToastProvider>
+        </AppQueryProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );
 }
 
-function AppShell() {
-  const { colors } = useTheme();
-  const [activeId, setActiveId] = useState<ModuleId>('home');
-  const active = getModule(activeId);
+function AppRoot() {
+  const { colors, mode } = useTheme();
 
   useEffect(() => {
     void loadSavedLanguage();
   }, []);
 
-  const styles = StyleSheet.create({
-    safe: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    content: {
-      flex: 1,
-    },
-  });
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        root: {
+          flex: 1,
+          backgroundColor: colors.background,
+        },
+      }),
+    [colors.background],
+  );
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top', 'right', 'bottom', 'left']}>
+    <View style={styles.root}>
+      <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
+      <AuthGuard fallback={<LoginScreen />}>
+        <AppShell />
+      </AuthGuard>
+    </View>
+  );
+}
+
+function AppShell() {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const [activeId, setActiveId] = useState<ModuleId>('home');
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        content: {
+          flex: 1,
+          backgroundColor: colors.background,
+        },
+      }),
+    [colors.background],
+  );
+
+  return (
+    <>
+      <AppHeader
+        title={t(`${activeId}.title`)}
+        onOpenSetting={() => setActiveId('setting')}
+        onOpenProfile={() => setActiveId('profile')}
+      />
       <View style={styles.content}>
         {activeId === 'home' ? <HomeScreen /> : null}
         {activeId === 'profile' ? <ProfileScreen /> : null}
-        {activeId === 'settings' ? <SettingsScreen /> : null}
-        {active.kind === 'remote' ? (
-          active.enabled ? (
-            <FederatedModule key={active.id} module={active} />
-          ) : (
-            <BlankScreen />
-          )
-        ) : null}
+        {activeId === 'setting' ? <SettingScreen /> : null}
+        {activeId === 'interview' ? <InterviewScreen /> : null}
+        {activeId === 'library' ? <LibraryScreen /> : null}
       </View>
-      <Footer activeId={activeId} onSelect={setActiveId} />
-    </SafeAreaView>
+      <TabFooter activeId={activeId} onSelect={setActiveId} />
+    </>
   );
 }
